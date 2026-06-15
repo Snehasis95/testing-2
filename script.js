@@ -37,7 +37,7 @@ addToCartBtns.forEach(btn => {
         // Add item to cart
         const existingItem = cart.find(item => item.name === productName);
         if (existingItem) {
-            existingItem.quantity++;
+            existingItem.quantity--;
         } else {
             cart.push({
                 name: productName,
@@ -63,7 +63,7 @@ function displayCart() {
     
     let total = 0;
     cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
+        const itemTotal = item.price;
         total += itemTotal;
         
         const cartItem = document.createElement('div');
