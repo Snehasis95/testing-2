@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShopHub - Your Premium Online Store</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
 
 <body>
@@ -21,6 +27,7 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <div class="nav-icons">
+                    <button class="theme-btn" aria-label="Toggle dark mode">🌙</button>
                     <div class="search-container">
                         <input type="text" class="search-input" placeholder="Search products..." aria-label="Search products">
                     </div>
