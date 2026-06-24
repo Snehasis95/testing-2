@@ -33,11 +33,11 @@ addToCartBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         const productName = btn.getAttribute('data-product');
         const productPrice = parseFloat(btn.getAttribute('data-price'));
-        
+
         // Add item to cart
         const existingItem = cart.find(item => item.name === productName);
         if (existingItem) {
-            existingItem.quantity--;
+            existingItem.quantity++;
         } else {
             cart.push({
                 name: productName,
@@ -45,7 +45,7 @@ addToCartBtns.forEach(btn => {
                 quantity: 1
             });
         }
-        
+
         updateCartCount();
         showNotification(`${productName} added to cart!`);
     });
@@ -54,18 +54,18 @@ addToCartBtns.forEach(btn => {
 // Display cart items
 function displayCart() {
     cartItemsContainer.innerHTML = '';
-    
+
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
         cartTotal.textContent = '0.00';
         return;
     }
-    
+
     let total = 0;
     cart.forEach((item, index) => {
-        const itemTotal = item.price;
+        const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        
+
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
@@ -78,12 +78,12 @@ function displayCart() {
                 <button class="remove-btn" data-index="${index}">Remove</button>
             </div>
         `;
-        
+
         cartItemsContainer.appendChild(cartItem);
     });
-    
+
     cartTotal.textContent = total.toFixed(2);
-    
+
     // Add remove functionality
     document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -122,7 +122,7 @@ function showNotification(message) {
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.remove();
     }, 3000);
@@ -190,15 +190,43 @@ document.querySelectorAll('.testimonial').forEach(card => {
     observer.observe(card);
 });
 
-// Search functionality placeholder
+// Product search
 const searchBtn = document.querySelector('.search-btn');
-if (searchBtn) {
+const searchContainer = document.querySelector('.search-container');
+const searchInput = document.querySelector('.search-input');
+const productCards = document.querySelectorAll('.product-card');
+const noResults = document.getElementById('noResults');
+
+if (searchBtn && searchContainer && searchInput) {
     searchBtn.addEventListener('click', () => {
-        const searchQuery = prompt('What are you looking for?');
-        if (searchQuery) {
-            showNotification(`Searching for: ${searchQuery}`);
+        searchContainer.classList.toggle('active');
+        if (searchContainer.classList.contains('active')) {
+            searchInput.focus();
+        } else {
+            searchInput.value = '';
+            filterProducts('');
         }
     });
+
+    searchInput.addEventListener('input', (e) => {
+        filterProducts(e.target.value);
+    });
+}
+
+function filterProducts(query) {
+    const term = query.trim().toLowerCase();
+    let visibleCount = 0;
+
+    productCards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const matches = name.includes(term);
+        card.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+    });
+
+    if (noResults) {
+        noResults.hidden = term === '' || visibleCount > 0;
+    }
 }
 
 // Checkout button

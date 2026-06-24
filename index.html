@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShopHub - Your Premium Online Store</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
@@ -19,7 +21,10 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <div class="nav-icons">
-                    <button class="search-btn">🔍</button>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search products..." aria-label="Search products">
+                    </div>
+                    <button class="search-btn" aria-label="Toggle search">🔍</button>
                     <button class="cart-btn">🛒 <span class="cart-count">0</span></button>
                 </div>
             </div>
@@ -31,7 +36,7 @@
         <div class="hero-content">
             <h1>Summer Collection 2026</h1>
             <p>Discover our latest premium products at unbeatable prices</p>
-            <p>Shop noe early bird offer</p>
+            <p>Shop now - early bird offer</p>
             <button class="cta-btn">Shop Now</button>
         </div>
         <div class="hero-image">
@@ -43,6 +48,7 @@
     <section id="products" class="products">
         <div class="container">
             <h2>Featured Products</h2>
+            <p id="noResults" class="no-results" hidden>No products match your search.</p>
             <div class="products-grid">
                 <!-- Product 1 -->
                 <div class="product-card">
@@ -161,8 +167,8 @@
                 <div class="footer-section">
                     <h4>Follow Us</h4>
                     <p>
-                        <a href="#">Facebook</a> | 
-                        <a href="#">Twitter</a> | 
+                        <a href="#">Facebook</a> |
+                        <a href="#">Twitter</a> |
                         <a href="#">Instagram</a>
                     </p>
                 </div>
@@ -188,4 +194,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
