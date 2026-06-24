@@ -33,11 +33,11 @@ addToCartBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         const productName = btn.getAttribute('data-product');
         const productPrice = parseFloat(btn.getAttribute('data-price'));
-        
+
         // Add item to cart
         const existingItem = cart.find(item => item.name === productName);
         if (existingItem) {
-            existingItem.quantity--;
+            existingItem.quantity++;
         } else {
             cart.push({
                 name: productName,
@@ -45,7 +45,7 @@ addToCartBtns.forEach(btn => {
                 quantity: 1
             });
         }
-        
+
         updateCartCount();
         showNotification(`${productName} added to cart!`);
     });
@@ -54,18 +54,18 @@ addToCartBtns.forEach(btn => {
 // Display cart items
 function displayCart() {
     cartItemsContainer.innerHTML = '';
-    
+
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
         cartTotal.textContent = '0.00';
         return;
     }
-    
+
     let total = 0;
     cart.forEach((item, index) => {
-        const itemTotal = item.price;
+        const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        
+
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
@@ -78,12 +78,12 @@ function displayCart() {
                 <button class="remove-btn" data-index="${index}">Remove</button>
             </div>
         `;
-        
+
         cartItemsContainer.appendChild(cartItem);
     });
-    
+
     cartTotal.textContent = total.toFixed(2);
-    
+
     // Add remove functionality
     document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -122,7 +122,7 @@ function showNotification(message) {
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.remove();
     }, 3000);
