@@ -57,7 +57,34 @@ body {
 
 .nav-icons {
     display: flex;
+    align-items: center;
     gap: 1rem;
+}
+
+.search-container {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.search-container.active {
+    width: 200px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.no-results {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
 }
 
 .search-btn,
@@ -526,5 +553,9 @@ body {
 
     .newsletter-form {
         flex-direction: column;
+    }
+
+    .search-container.active {
+        width: 140px;
     }
 }

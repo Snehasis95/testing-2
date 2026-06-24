@@ -190,15 +190,43 @@ document.querySelectorAll('.testimonial').forEach(card => {
     observer.observe(card);
 });
 
-// Search functionality placeholder
+// Product search
 const searchBtn = document.querySelector('.search-btn');
-if (searchBtn) {
+const searchContainer = document.querySelector('.search-container');
+const searchInput = document.querySelector('.search-input');
+const productCards = document.querySelectorAll('.product-card');
+const noResults = document.getElementById('noResults');
+
+if (searchBtn && searchContainer && searchInput) {
     searchBtn.addEventListener('click', () => {
-        const searchQuery = prompt('What are you looking for?');
-        if (searchQuery) {
-            showNotification(`Searching for: ${searchQuery}`);
+        searchContainer.classList.toggle('active');
+        if (searchContainer.classList.contains('active')) {
+            searchInput.focus();
+        } else {
+            searchInput.value = '';
+            filterProducts('');
         }
     });
+
+    searchInput.addEventListener('input', (e) => {
+        filterProducts(e.target.value);
+    });
+}
+
+function filterProducts(query) {
+    const term = query.trim().toLowerCase();
+    let visibleCount = 0;
+
+    productCards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const matches = name.includes(term);
+        card.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+    });
+
+    if (noResults) {
+        noResults.hidden = term === '' || visibleCount > 0;
+    }
 }
 
 // Checkout button
