@@ -1,3 +1,25 @@
+// Theme toggle
+const themeBtn = document.querySelector('.theme-btn');
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    if (themeBtn) {
+        themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+        themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+}
+
+if (themeBtn) {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+}
+
 // Shopping Cart
 let cart = [];
 
